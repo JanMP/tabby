@@ -1,0 +1,25 @@
+template(name='navbar')
+  nav.navbar.navbar-default.navbar-fixed-top
+    .container-fluid
+      .navbar-header
+        a.navbar-brand(href='/') tabby
+        button.navbar-toggle.collapsed(type=button data-toggle="collapse" data-target=".navbar-collapse")
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+      div.navbar-collapse.collapse
+        ul.nav.navbar-nav
+          //li
+            a(href='/about') about
+        ul.nav.navbar-nav.navbar-right
+          //+loginButtons
+          li(class=isActivePath("/songs"))
+            a(href="/songs") songs
+          li(class=isActivePath("/chords"))
+            a(href="/chords") chords
+          li(class=isActivePath("/settings"))
+            a(href="/settings")
+              i.fa.fa-lg.fa-cog
+          li(class=isActivePath("/help"))
+            a(href="/help")
+              i.fa.fa-lg.fa-question
