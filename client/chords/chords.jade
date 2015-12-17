@@ -3,11 +3,24 @@ template(name="chords")
     h1.page-header chords
       button.btn.btn-default.new-chord-button.pull-right new chord
     each chords
-      +displayChord
+      +chordDisplay
 
-template(name="displayChord")
+template(name="chordDisplay")
   .card-panel
     .card-content
+      +deleteButton
+      +editToggle
       h3 #{name}
-    .card-editor
-      +quickForm(collection="Chords" doc=this id=formId type="update") 
+      +tabDisplay(chord=this displayId=displayId)
+    if editing
+      .card-editor
+        +quickForm(collection="Chords" doc=this id=formId type="update") 
+
+template(name="editToggle")
+  span
+    i.fa.fa-lg.fa-fw.fa-edit.icon-button.edit-toggle.pull-right
+    
+
+template(name="deleteButton")
+  span
+    i.fa.fa-lg.fa-fw.fa-trash.icon-button.delete-button.pull-right
