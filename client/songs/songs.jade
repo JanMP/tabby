@@ -1,3 +1,23 @@
 template(name="songs")
   .container
-    h1 songs
+    h1.page-header songs
+      button.btn.btn-default.new-song-button.pull-right new song
+    if newSong
+      +newSongEdit
+    each songs
+      +songDisplay
+
+template(name="songDisplay")
+  .card-panel
+    .card-content
+      +songDeleteButton
+      +songEditButton
+      h3 #{title}
+
+template(name="songEditButton")
+  span
+    i.fa.fa-lg.fa-fw.fa-edit.icon-button.edit-button.pull-right
+    
+template(name="songDeleteButton")
+  span
+    i.fa.fa-lg.fa-fw.fa-trash.icon-button.delete-button.pull-right

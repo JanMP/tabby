@@ -3,13 +3,13 @@ Template.chords.helpers
   chords : -> Chords.find()
 
 
-Template.editToggle.events
+Template.chordEditToggle.events
 
   "click .edit-toggle" : ->
     key = "editing-#{this._id}"
     Session.set key, not Session.get key
 
-Template.deleteButton.events
+Template.chordDeleteButton.events
 
   "click .delete-button" : ->
     if window.confirm "Do you really want to delete this chord?"

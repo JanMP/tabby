@@ -8,19 +8,19 @@ template(name="chords")
 template(name="chordDisplay")
   .card-panel
     .card-content
-      +deleteButton
-      +editToggle
+      +chordDeleteButton
+      +chordEditToggle
       h3 #{name}
       +tabDisplay(chord=this displayId=displayId)
     if editing
       .card-editor
         +quickForm(collection="Chords" doc=this id=formId type="update") 
 
-template(name="editToggle")
+template(name="chordEditToggle")
   span
     i.fa.fa-lg.fa-fw.fa-edit.icon-button.edit-toggle.pull-right
     
 
-template(name="deleteButton")
+template(name="chordDeleteButton")
   span
     i.fa.fa-lg.fa-fw.fa-trash.icon-button.delete-button.pull-right

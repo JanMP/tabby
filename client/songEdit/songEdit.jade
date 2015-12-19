@@ -1,0 +1,27 @@
+template(name="songEdit")
+  .container
+    .card-panel
+      .card-content
+        h3 Edit Song
+        .card-editor
+          +quickForm(collection="Songs" doc=song id=formId type="update" autosave=true buttonContent=false)
+    h3.page-header Chords
+    .row
+      +sortable(items=chords options=chordSortableOptions)
+        .col-sm-3.draggable-chord
+          .card-panel
+            .card-content
+              | #{name}
+    h3.page-header Song
+    .card-panel
+      .card-content
+        .row
+          +sortable(items=tabs options=tabSortableOptions)
+            +songTabDisplay
+
+template(name="songTabDisplay")
+  .col-sm-6.draggable-tab(data-id=_id)
+    .card-panel
+      .card-content
+        +tabDisplay(chord=chord displayId=displayId)
+        h3 #{chord.name}

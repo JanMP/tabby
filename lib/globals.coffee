@@ -53,3 +53,41 @@ Chords.attachSchema tabSchema
     string : 2
     barre : false
   ]
+
+@Songs = new Mongo.Collection "songs"
+
+Songs.attachSchema new SimpleSchema
+  title :
+    type : String
+  beatsPerBar :
+    type : Number
+  bpm :
+    type : Number
+
+@newSong = ->
+  title : "Song Title"
+  beatsPerBar : 4
+  bpm : 90
+
+@Tabs = new Mongo.Collection "tabs"
+
+Tabs.attachSchema new SimpleSchema
+  song :
+    type : String #the _id of the Song
+  chord :
+    type : String #the _id of the Chord
+  order :
+    type : Number #the ordinal from Rubaxa-Sortable
+  beats :
+    type : Number
+  lyrics :
+    type : String
+
+@newTab = (songId, chordId) ->
+  song : songId
+  chord : chordId
+  order : 1000
+  beats : 4
+  lyrics : "la la la"
+
+
