@@ -82,12 +82,13 @@ Tabs.attachSchema new SimpleSchema
     type : Number
   lyrics :
     type : String
+    optional : true
 
 @newTab = (songId, chordId) ->
   song : songId
   chord : chordId
   order : 1000
   beats : 4
-  lyrics : "la la la"
+  
 
 

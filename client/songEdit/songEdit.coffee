@@ -59,3 +59,17 @@ Template.songTabDisplay.helpers
 
   displayId : -> "tab-display-#{this._id}"
 
+  lyricsFieldOptions : ->
+    collection : "tabs"
+    field : "lyrics"
+    acceptEmpty : true
+    textarea : true
+    placeholder : "add lyrics"
+    substitute : "add lyrics"
+
+
+Template.songTabDisplay.events
+
+  "click .delete-button" : ->
+    Tabs.remove this._id
+

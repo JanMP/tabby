@@ -8,20 +8,24 @@ template(name="songEdit")
     h3.page-header Chords
     .row
       +sortable(items=chords options=chordSortableOptions)
-        .col-sm-3.draggable-chord
+        .col.col-sm-2.draggable-chord
           .card-panel
             .card-content
               | #{name}
     h3.page-header Song
     .card-panel
       .card-content
-        .row
-          +sortable(items=tabs options=tabSortableOptions)
-            +songTabDisplay
+        +sortable(items=tabs options=tabSortableOptions)
+          +songTabDisplay
+
 
 template(name="songTabDisplay")
-  .col-sm-6.draggable-tab(data-id=_id)
-    .card-panel
-      .card-content
-        +tabDisplay(chord=chord displayId=displayId)
-        h3 #{chord.name}
+  .tab-container.draggable-tab(data-id=_id)
+    .tab-bar
+      span
+        i.fa.fa-lg.fa-fw.fa-trash.delete-button.fa-pull-left
+      h4.text-center #{chord.name}
+    //span
+      i.fa.fa-lg.fa-fw.fa-edit.icon-button.edit-button.pull-right
+    +tabDisplay(chord=chord displayId=displayId size=120)
+    +editableText(options=lyricsFieldOptions)
