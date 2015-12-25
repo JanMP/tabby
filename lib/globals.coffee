@@ -112,8 +112,8 @@ Songs.attachSchema songSchema
 Tabs.attachSchema tabSchema
 
 @newTab = (songId, chordId) ->
-  song : songId
-  chord : chordId
+  songId : songId
+  chordId : chordId
   order : 1000
   beats : 4
   

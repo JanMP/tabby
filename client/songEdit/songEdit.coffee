@@ -14,7 +14,7 @@ Template.songEdit.helpers
 
   tabs : ->
     Tabs.find
-      song : FlowRouter.getParam "id"
+      songId : FlowRouter.getParam "id"
     ,
       sort :
         order : 1
@@ -45,17 +45,16 @@ Template.songEdit.helpers
       itemEl.parentElement.removeChild(itemEl)
       console.log event.newIndex
       templInst.collection.insert
-        song : FlowRouter.getParam "id"
-        chord : event.data._id
+        songId : FlowRouter.getParam "id"
+        chordId : event.data._id
         order : event.newIndex - 1
         beats : 4
-        lyrics : "lalala"
 
 
 Template.songTabDisplay.helpers
 
   chord : ->
-    Chords.findOne(this.chord)
+    Chords.findOne(this.chordId)
 
   displayId : -> "tab-display-#{this._id}"
 
