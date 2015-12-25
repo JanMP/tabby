@@ -1,6 +1,6 @@
 @Chords = new Mongo.Collection "chords"
 
-fingerSchema = new SimpleSchema
+@fingerSchema = new SimpleSchema
   number :
     type : Number #the finger number displayed in the tab
   fret :
@@ -10,13 +10,24 @@ fingerSchema = new SimpleSchema
   barre :
     type : Boolean #barre to this string starting at string 0
 
-tabSchema = new SimpleSchema
+@chordSchema = new SimpleSchema
   instrument :
     type : String
+    autoform :
+      type : "hidden"
   name :
     type : String #name of the chord
+  userId :
+    type : String
+    autoValue : ->
+      unless this.isSet
+        Meteor.userId()
+    autoform :
+      type : "hidden"
   strings :
     type : [String] #names of the strings
+    autoform :
+      type : "hidden"
   numFrets :
     type : Number #number of frets displayed in the tab
   firstFret :
@@ -24,7 +35,7 @@ tabSchema = new SimpleSchema
   fingers :
     type : [fingerSchema]
 
-Chords.attachSchema tabSchema
+Chords.attachSchema chordSchema
 
 @newUkuleleChord = ->
   instrument : "ukulele-hawaii"
@@ -56,13 +67,22 @@ Chords.attachSchema tabSchema
 
 @Songs = new Mongo.Collection "songs"
 
-Songs.attachSchema new SimpleSchema
+@songSchema = new SimpleSchema
   title :
     type : String
+  userId :
+    type : String
+    autoValue : ->
+      unless this.isSet
+        Meteor.userId()
+    autoform :
+      type : "hidden"
   beatsPerBar :
     type : Number
   bpm :
     type : Number
+
+Songs.attachSchema songSchema
 
 @newSong = ->
   title : "Song Title"
@@ -71,10 +91,15 @@ Songs.attachSchema new SimpleSchema
 
 @Tabs = new Mongo.Collection "tabs"
 
-Tabs.attachSchema new SimpleSchema
-  song :
+@tabSchema =  new SimpleSchema
+  songId :
     type : String #the _id of the Song
-  chord :
+  userId :
+    type : String
+    autoValue : ->
+      unless this.isSet
+        Meteor.userId()
+  chordId :
     type : String #the _id of the Chord
   order :
     type : Number #the ordinal from Rubaxa-Sortable
@@ -83,6 +108,8 @@ Tabs.attachSchema new SimpleSchema
   lyrics :
     type : String
     optional : true
+
+Tabs.attachSchema tabSchema
 
 @newTab = (songId, chordId) ->
   song : songId

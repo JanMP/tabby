@@ -17,14 +17,14 @@ es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 autopublish             # Publish all data to the clients (for prototyping)
-insecure                # Allow all DB writes from clients (for prototyping)
+#insecure                # Allow all DB writes from clients (for prototyping)
 
 coffeescript
 stylus
 check
 dalgard:jade
 meteortoys:allthings
-#accounts-password
+accounts-password
 kadira:flow-router
 kadira:blaze-layout
 zimme:active-route
@@ -40,3 +40,5 @@ rzymek:moment-locale-de
 janmp:rubaxa-sortable
 arturs:konva
 babrahams:editable-text
+ian:accounts-ui-bootstrap-3
+ongoworks:security

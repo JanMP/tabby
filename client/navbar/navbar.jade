@@ -12,7 +12,6 @@ template(name='navbar')
           //li
             a(href='/about') about
         ul.nav.navbar-nav.navbar-right
-          //+loginButtons
           li(class=isActivePath("/songs"))
             a(href="/songs") songs
           li(class=isActivePath("/chords"))
@@ -23,3 +22,4 @@ template(name='navbar')
           li(class=isActivePath("/help"))
             a(href="/help")
               i.fa.fa-lg.fa-question
+          +loginButtons
