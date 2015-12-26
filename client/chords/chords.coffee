@@ -25,6 +25,9 @@ Template.chordDisplay.helpers
     key = "editing-#{this._id}"
     Session.get key
 
+  mayEdit : ->
+    this.userId is Meteor.userId()
+
 Template.chords.events
 
   "click .new-chord-button" : ->

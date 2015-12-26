@@ -5,6 +5,11 @@ Template.songs.helpers
       sort :
         title : 1
 
+Template.songDisplay.helpers
+  
+  mayEdit : ->
+    this.userId is Meteor.userId()
+
 Template.songs.events
 
   "click .new-song-button" : ->

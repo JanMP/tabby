@@ -9,3 +9,14 @@ template(name="layout")
   main
     //+autoformModals
     {{> Template.dynamic template=content}}
+
+template(name="unAuthorized")
+  .container
+    .card-panel
+      .card-content.text-center
+        h1 Access denied
+        p Sorry, you are not allowed to Access this page.
+        if loggedIn
+          p This page belongs to a different User-account.
+        else
+          p You must be logged-in to access this page.

@@ -1,29 +1,33 @@
 template(name="songEdit")
-  .container
-    .card-panel
-      .card-content
-        h3 Edit Song
-        .card-editor
-          +quickForm(collection="Songs" doc=song id=formId type="update" autosave=true buttonContent=false)
-    h3.page-header Chords
-    .row
-      +sortable(items=chords options=chordSortableOptions)
-        .col.col-sm-2.draggable-chord
-          .card-panel
-            .card-content
-              | #{name}
-    h3.page-header Song
-    .card-panel
-      .card-content
-        +sortable(items=tabs options=tabSortableOptions)
-          +songTabDisplay
+  unless mayEdit
+    +unAuthorized
+  else
+    .container
+      .card-panel
+        .card-content
+          h3 Edit Song
+          .card-editor
+            +quickForm(collection="Songs" doc=song id=formId type="update" autosave=true buttonContent=false)
+      h3.page-header Chords
+      .row
+        +sortable(items=chords options=chordSortableOptions)
+          .col.col-sm-2.draggable-chord
+            .card-panel
+              .card-content
+                | #{name}
+      h3.page-header Song
+      .card-panel
+        .card-content
+          +sortable(items=tabs options=tabSortableOptions)
+            +songTabDisplay
 
 
 template(name="songTabDisplay")
   .tab-container.draggable-tab(data-id=_id)
     .tab-bar
-      span
-        i.fa.fa-lg.fa-fw.fa-trash.delete-button.fa-pull-left
+      if mayEdit
+        span
+          i.fa.fa-lg.fa-fw.fa-trash.delete-button.fa-pull-left
       h4.text-center #{chord.name}
     //span
       i.fa.fa-lg.fa-fw.fa-edit.icon-button.edit-button.pull-right

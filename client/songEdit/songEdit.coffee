@@ -9,6 +9,11 @@ Template.songEdit.helpers
     id = FlowRouter.getParam "id"
     Songs.findOne id
 
+  mayEdit : ->
+    id = FlowRouter.getParam "id"
+    song = Songs.findOne id
+    song.userId is Meteor.userId()
+
   chords : ->
     Chords.find()
 
@@ -55,6 +60,9 @@ Template.songTabDisplay.helpers
 
   chord : ->
     Chords.findOne(this.chordId)
+
+  mayEdit : ->
+    this.userId = Meteor.userId()
 
   displayId : -> "tab-display-#{this._id}"
 

@@ -1,7 +1,8 @@
 template(name="songs")
   .container
     h1.page-header songs
-      button.btn.btn-default.new-song-button.pull-right new song
+      if loggedIn
+        button.btn.btn-default.new-song-button.pull-right new song
     if newSong
       +newSongEdit
     each songs
@@ -10,8 +11,9 @@ template(name="songs")
 template(name="songDisplay")
   .card-panel
     .card-content
-      +songDeleteButton
-      +songEditButton
+      if mayEdit
+        +songDeleteButton
+        +songEditButton
       h3 #{title}
 
 template(name="songEditButton")
