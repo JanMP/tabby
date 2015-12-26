@@ -1,6 +1,7 @@
 Template.chords.helpers
 
-  chords : -> Chords.find()
+  chords : -> Chords.find
+    instrument : Session.get "instrument"
 
 
 Template.chordEditToggle.events
@@ -31,6 +32,8 @@ Template.chordDisplay.helpers
 Template.chords.events
 
   "click .new-chord-button" : ->
-    id = Chords.insert newUkuleleChord()
+    id = Chords.insert switch Session.get "instrument"
+      when "guitar" then newGuitarChord()
+      else newUkuleleChord()
     key = "editing-#{id}"
     Session.set key, true

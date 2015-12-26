@@ -47,7 +47,9 @@ Template.tabDisplay.onRendered ->
       layer.add new Konva.Line
         points : [x, yTop, x, yBottom]
         stroke : "black"
-        strokeWidth : 1
+        strokeWidth :
+          if chord.firstFret is 1 and i is 0 then 3 else 1
+        lineCap : "round"
     for finger in chord.fingers
       x = fingerX finger.fret
       y = stringY finger.string

@@ -15,7 +15,8 @@ Template.songEdit.helpers
     song.userId is Meteor.userId()
 
   chords : ->
-    Chords.find()
+    Chords.find
+      instrument : Session.get "instrument"
 
   tabs : ->
     Tabs.find

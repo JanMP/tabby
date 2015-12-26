@@ -65,6 +65,34 @@ Chords.attachSchema chordSchema
     barre : false
   ]
 
+@newGuitarChord = ->
+  instrument : "guitar"
+  name : "new Chord"
+  strings : ["E", "B", "G", "D", "A", "E"]
+  numFrets : 4
+  firstFret : 1
+  fingers : [
+    number : 1
+    fret : 0
+    string : 5
+    barre : true
+  ,
+    number : 2
+    fret : 1
+    string : 0
+    barre : false
+  ,
+    number : 3
+    fret : 2
+    string : 1
+    barre : false
+  ,
+    number : 4
+    fret : 3
+    string : 2
+    barre : false
+  ]
+
 @Songs = new Mongo.Collection "songs"
 
 @songSchema = new SimpleSchema

@@ -9,6 +9,9 @@ template(name="songEdit")
           .card-editor
             +quickForm(collection="Songs" doc=song id=formId type="update" autosave=true buttonContent=false)
       h3.page-header Chords
+        .form-inline.pull-right
+          .input-group
+            +instrumentPicker
       .row
         +sortable(items=chords options=chordSortableOptions)
           .col.col-sm-2.draggable-chord

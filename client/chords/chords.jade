@@ -1,7 +1,12 @@
 template(name="chords")
   .container
     h1.page-header chords
-      button.btn.btn-default.new-chord-button.pull-right new chord
+      .form-inline.pull-right
+        .input-group
+          +instrumentPicker
+        if loggedIn
+          .input-group
+            button.btn.btn-default.new-chord-button new chord
     .row
       each chords
         +chordDisplay
