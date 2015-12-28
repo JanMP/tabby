@@ -2,8 +2,7 @@ Template.songEdit.helpers
 
   formId : ->
     id = FlowRouter.getParam "id"
-    console.log(this._id, id)
-    "songEdit-#{this.id}"
+    "songEdit-#{id}"
 
   song : ->
     id = FlowRouter.getParam "id"
@@ -12,7 +11,7 @@ Template.songEdit.helpers
   mayEdit : ->
     id = FlowRouter.getParam "id"
     song = Songs.findOne id
-    song.userId is Meteor.userId()
+    song?.userId is Meteor.userId()
 
   chords : ->
     Chords.find
@@ -27,19 +26,18 @@ Template.songEdit.helpers
 
   chordSortableOptions : ->
     sort : false
-    draggable : ".draggable-chord"
+    draggable : ".draggable"
     group :
       name : "chords"
-      put : false
+      put : ["chords"]
       pull : "clone"
     animation : 200
     ghostClass : "ghost"
-
+    onRemove : (event, templInst) ->
   tabSortableOptions : ->
-    sort :
-      order : 1
+    sort : true
     sortField : "order"
-    draggable : ".draggable-tab"
+    draggable : ".draggable"
     group :
       name : "tabs"
       put : ["chords", "tabs"]
@@ -47,15 +45,14 @@ Template.songEdit.helpers
     animation : 200
     ghostClass : "ghost"
     onAdd : (event, templInst) ->
-      itemEl = event.item
-      itemEl.parentElement.removeChild(itemEl)
-      console.log event.newIndex
+      #clean up behind Sortable
+      event.clone.style.display = "none"
+      event.from.insertBefore event.item, event.clone
       templInst.collection.insert
         songId : FlowRouter.getParam "id"
         chordId : event.data._id
-        order : event.newIndex - 1
+        order : event.newIndex - 0.5
         beats : 4
-
 
 Template.songTabDisplay.helpers
 
@@ -63,7 +60,7 @@ Template.songTabDisplay.helpers
     Chords.findOne(this.chordId)
 
   mayEdit : ->
-    this.userId = Meteor.userId()
+    this.userId is Meteor.userId()
 
   displayId : -> "tab-display-#{this._id}"
 

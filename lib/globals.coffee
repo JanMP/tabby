@@ -131,6 +131,7 @@ Songs.attachSchema songSchema
     type : String #the _id of the Chord
   order :
     type : Number #the ordinal from Rubaxa-Sortable
+    decimal : true
   beats :
     type : Number
   lyrics :

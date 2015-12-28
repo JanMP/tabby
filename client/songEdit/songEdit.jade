@@ -14,7 +14,7 @@ template(name="songEdit")
             +instrumentPicker
       .row
         +sortable(items=chords options=chordSortableOptions)
-          .col.col-sm-2.draggable-chord
+          .col.col-sm-2.draggable
             .card-panel
               .card-content
                 | #{name}
@@ -26,12 +26,12 @@ template(name="songEdit")
 
 
 template(name="songTabDisplay")
-  .tab-container.draggable-tab(data-id=_id)
+  .tab-container.draggable(data-id=_id)
     .tab-bar
       if mayEdit
         span
           i.fa.fa-lg.fa-fw.fa-trash.delete-button.fa-pull-left
-      h4.text-center #{chord.name}
+      h4.text-center #{order}: #{chord.name}
     //span
       i.fa.fa-lg.fa-fw.fa-edit.icon-button.edit-button.pull-right
     +tabDisplay(chord=chord displayId=displayId size=120)
