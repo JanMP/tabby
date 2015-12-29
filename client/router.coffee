@@ -1,5 +1,5 @@
 FlowRouter.route "/",
-  action : -> 
+  action : ->
     BlazeLayout.render "layout",
       content : "about"
 

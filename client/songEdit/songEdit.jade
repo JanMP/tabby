@@ -12,17 +12,21 @@ template(name="songEdit")
         .form-inline.pull-right
           .input-group
             +instrumentPicker
-      .row
-        +sortable(items=chords options=chordSortableOptions)
-          .col.col-sm-2.draggable
-            .card-panel
-              .card-content
-                | #{name}
+      +sortable(items=chords options=chordSortableOptions)
+        +chordTrayDisplay
       h3.page-header Song
       .card-panel
         .card-content
           +sortable(items=tabs options=tabSortableOptions)
             +songTabDisplay
+
+
+template(name="chordTrayDisplay")
+  .small-tab-container.draggable
+    .card-panel
+      .card-content
+        .text-center #{name}
+        +tabDisplay(chord=this displayId=_id size=60)
 
 
 template(name="songTabDisplay")
@@ -31,8 +35,15 @@ template(name="songTabDisplay")
       if mayEdit
         span
           i.fa.fa-lg.fa-fw.fa-trash.delete-button.fa-pull-left
-      h4.text-center #{order}: #{chord.name}
+      h4.text-center #{chord.name}
     //span
       i.fa.fa-lg.fa-fw.fa-edit.icon-button.edit-button.pull-right
     +tabDisplay(chord=chord displayId=displayId size=120)
-    +editableText(options=lyricsFieldOptions)
+    .text-center
+      span
+        i.fa.fa-fw.fa-minus.minus-button
+      span.beats-display #{beats} beats
+      span
+        i.fa.fa-fw.fa-plus.plus-button
+    .text-center
+      +editableText(options=lyricsFieldOptions)

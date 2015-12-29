@@ -45,13 +45,20 @@ Template.songEdit.helpers
     animation : 200
     ghostClass : "ghost"
     onAdd : (event, templInst) ->
+      #since we can't rely on event.newIndex:
+      index =  if event.item.nextElementSibling?
+        Blaze.getData(event.item.nextElementSibling).order - 0.5
+      else if event.item.previousElementSibling?
+        Blaze.getData(event.item.previousElementSibling).order + 0.5
+      else 0
       #clean up behind Sortable
       event.clone.style.display = "none"
       event.from.insertBefore event.item, event.clone
+
       templInst.collection.insert
         songId : FlowRouter.getParam "id"
         chordId : event.data._id
-        order : event.newIndex - 0.5
+        order : index
         beats : 4
 
 Template.songTabDisplay.helpers
@@ -78,3 +85,12 @@ Template.songTabDisplay.events
   "click .delete-button" : ->
     Tabs.remove this._id
 
+  "click .plus-button" : ->
+    Tabs.update this._id,
+      $inc :
+        beats : 1
+
+  "click .minus-button" : ->
+    Tabs.update this._id,
+      $inc :
+        beats : -1
