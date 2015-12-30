@@ -26,3 +26,8 @@ Template.songDeleteButton.events
   "click .delete-button" : ->
     if confirm "really delete #{this._id}?"
       Songs.remove this._id
+
+Template.songPlayButton.events
+
+  "click .play-button" : ->
+    FlowRouter.go "/play/#{this._id}"

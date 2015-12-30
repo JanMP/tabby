@@ -1,0 +1,15 @@
+template(name="songPlay")
+  .container
+    .card-panel
+      .card-content
+        h1.page-header play - #{song.title}
+        h3.start-button start
+        h3.stop-button stop
+        h2 #{beat}
+        each tabs
+          +playTabDisplay
+
+template(name="playTabDisplay")
+  if beatHelper.active
+    +tabDisplay(chord=chord displayId=_id size=120)
+    p #{beatHelper.countdown} #{chord.name} - #{beats} beats - #{lyrics} - #{nextTab.lyrics}

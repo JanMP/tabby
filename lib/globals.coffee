@@ -145,6 +145,3 @@ Tabs.attachSchema tabSchema
   chordId : chordId
   order : 1000
   beats : 4
-  
-
-

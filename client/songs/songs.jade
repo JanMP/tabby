@@ -14,7 +14,12 @@ template(name="songDisplay")
       if mayEdit
         +songDeleteButton
         +songEditButton
+      +songPlayButton
       h3 #{title}
+
+template(name="songPlayButton")
+  span
+    i.fa.fa-lg.fa-fw.fa-play.icon-button.play-button.pull-right
 
 template(name="songEditButton")
   span

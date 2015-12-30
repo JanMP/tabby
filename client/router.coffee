@@ -13,6 +13,11 @@ FlowRouter.route "/edit-song/:id",
     BlazeLayout.render "layout",
     content : "songEdit"
 
+FlowRouter.route "/play/:id",
+  action : ->
+    BlazeLayout.render "layout",
+    content : "songPlay"
+
 FlowRouter.route "/chords",
   action : ->
     BlazeLayout.render "layout",
