@@ -1,17 +1,10 @@
-Template.songPlay.onCreated ->
-  this.autorun ->
-    beatTimer.tick()
-    startTime = Session.get "startTime"
-    bpm = Session.get "bpm"
-    beat = Math.round((new Date() - startTime)/(60000/bpm))
-    Session.set "beat", beat
-
+getSong = () ->
+  Songs.findOne FlowRouter.getParam "id"
+  
 
 Template.songPlay.helpers
 
-  song : ->
-    id = FlowRouter.getParam "id"
-    Songs.findOne id
+  song : -> getSong()
 
   tabs : ->
     id = FlowRouter.getParam "id"
@@ -27,14 +20,11 @@ Template.songPlay.helpers
 Template.songPlay.events
 
   "click .start-button" : ->
-    console.log "start"
-    Session.set "startTime", new Date()
-    Session.set "bpm", 60
-    beatTimer.start(60/Session.get "bpm")
-
+    song = getSong()
+    myMetronome.start song.bpm, song.beatsPerBar
+    
   "click .stop-button" : ->
-    console.log "stop"
-    beatTimer.stop()
+    myMetronome.stop()
     
 
 
@@ -43,16 +33,17 @@ Template.playTabDisplay.helpers
   chord : ->
     Chords.findOne this.chordId
 
-  nextTab : ->
-    Tabs.findOne
+  
+  beatHelper : ->
+    song = getSong()
+    nextTab = Tabs.findOne
       songId : FlowRouter.getParam "id"
       order :
         $gt : this.order
     ,
       sort :
         order : 1
-
-  beatHelper : ->
+    nextChord = Chords.findOne nextTab?.chordId
     startBeat = 1
     cursor = Tabs.find
       songId : FlowRouter.getParam "id"
@@ -61,5 +52,10 @@ Template.playTabDisplay.helpers
     cursor.forEach (tab) ->
       startBeat += tab.beats
     beat = Session.get "beat"
+    
+    beatFormatted : "#{(beat - 1) // song.beatsPerBar + 1}:#{(beat - 1) %% song.beatsPerBar + 1}"
     active : startBeat <= beat < startBeat + this.beats
-    countdown : startBeat - beat
+    countdown : startBeat + this.beats - beat
+    nextTab : nextTab
+    nextChord : nextChord
+    
