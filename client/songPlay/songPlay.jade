@@ -5,10 +5,21 @@ template(name="songPlay")
         h1.page-header play - #{song.title}
         h3.start-button start
         h3.stop-button stop
-        each tabs
-          +playTabDisplay
+        +playTabDisplay
 
 template(name="playTabDisplay")
+  .flex-container
+    .tab-container.flex
+      h4 #{beatFormatted} - #{currentChord.name}
+      +tabDisplay(chord=currentChord displayId="current-tab" size=120)
+      p #{currentLyrics}
+    if nextChord
+      .tab-container.flex
+        h4 in #{countdown} - #{nextChord.name}
+        +tabDisplay(chord=nextChord displayId="next-tab" size=120)
+        p #{nextLyrics}
+
+//template(name="playTabDisplay")
   if beatHelper.active
     h3 #{beatHelper.beatFormatted}
     .flex-container

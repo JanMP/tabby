@@ -3,6 +3,8 @@ Template.tabDisplay.onRendered ->
   this.autorun ->
   
     chord = Template.currentData().chord
+    unless chord?
+      return
     numStrings = chord.strings.length
     numFrets = chord.numFrets
      

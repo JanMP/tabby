@@ -1,21 +1,29 @@
-getSong = () ->
+getSong = ->
   Songs.findOne FlowRouter.getParam "id"
-  
+
+fetchTabs = ->
+  tabs = Tabs.find(
+    songId : FlowRouter.getParam "id"
+  ,
+    sort :
+      order : 1
+  ).fetch()
+  startBeat = 1
+  for tab in tabs
+    tab.startBeat = startBeat
+    startBeat += tab.beats
+    tab.chord = Chords.findOne tab.chordId
+  endBeat = startBeat
+
+  tabs : tabs
+  endBeat : endBeat
+
 
 Template.songPlay.helpers
 
   song : -> getSong()
-
-  tabs : ->
-    id = FlowRouter.getParam "id"
-    result = Tabs.find
-      songId : id
-    ,
-      sort :
-        order : 1
-    result
-
   beat : -> Session.get "beat"
+
 
 Template.songPlay.events
 
@@ -24,38 +32,69 @@ Template.songPlay.events
     myMetronome.start song.bpm, song.beatsPerBar
     
   "click .stop-button" : ->
-    myMetronome.stop()
+    song = getSong()
+    myMetronome.stop song.beatsPerBar
     
+
+Template.playTabDisplay.onCreated ->
+ 
+  sameTab = (a, b) ->
+    a?._id is b?._id
+
+  this.tabData = new ReactiveVar fetchTabs()
+  this.currentTab = new ReactiveVar {}, sameTab
+  this.nextTab = new ReactiveVar {}, sameTab
+  
+  this.autorun =>
+    beat = Session.get "beat"
+    tabData = Template.instance().tabData.get()
+    if tabData.tabs.length is 0
+      tabData = fetchTabs()
+    if 0 < beat < tabData.endBeat
+      for tab, i in tabData.tabs
+        if tab.startBeat <= beat < tab.startBeat + tab.beats
+          current = i
+    else
+      if beat < 1
+        current = 0
+      else
+        myMetronome.stop(getSong()?.beatsPerBar)
+
+    Template.instance().currentTab.set tabData.tabs[current]
+    Template.instance().nextTab.set tabData.tabs[current + 1]
 
 
 Template.playTabDisplay.helpers
 
-  chord : ->
-    Chords.findOne this.chordId
+  currentChord : -> 
+    currentTab = Template.instance().currentTab.get()
+    currentTab?.chord
 
-  
-  beatHelper : ->
-    song = getSong()
-    nextTab = Tabs.findOne
-      songId : FlowRouter.getParam "id"
-      order :
-        $gt : this.order
-    ,
-      sort :
-        order : 1
-    nextChord = Chords.findOne nextTab?.chordId
-    startBeat = 1
-    cursor = Tabs.find
-      songId : FlowRouter.getParam "id"
-      order :
-        $lt : this.order
-    cursor.forEach (tab) ->
-      startBeat += tab.beats
+  currentLyrics : -> 
+    currentTab = Template.instance().currentTab.get()
+    currentTab?.lyrics
+
+  nextChord : -> 
+    nextTab = Template.instance().nextTab.get()
+    nextTab?.chord
+
+  nextLyrics : -> 
+    nextTab = Template.instance().nextTab.get()
+    nextTab?.lyrics
+
+  beatFormatted : ->
     beat = Session.get "beat"
-    
-    beatFormatted : "#{(beat - 1) // song.beatsPerBar + 1}:#{(beat - 1) %% song.beatsPerBar + 1}"
-    active : startBeat <= beat < startBeat + this.beats
-    countdown : startBeat + this.beats - beat
-    nextTab : nextTab
-    nextChord : nextChord
-    
+    beatsPerBar = getSong()?.beatsPerBar
+    unless beat?
+      ""
+    if beat > 0
+      "#{(beat - 1) // beatsPerBar + 1}:\
+      #{(beat - 1) %% beatsPerBar + 1}"
+    else
+      "in #{1-beat}"
+ 
+  countdown : ->
+    beat = Session.get "beat"
+    currentTab = Template.instance().currentTab.get()
+    currentTab?.startBeat + currentTab?.beats - beat
+

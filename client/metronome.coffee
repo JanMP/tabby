@@ -15,17 +15,11 @@ Metronome = () ->
     else
       snare.play()
   start = (bpm, bpb=4) ->
-    console.log "metronome start"
-    console.log timer
-    stop()
+    stop(bpb)
     timer = window.setInterval doTimer, 60/bpm*1000, bpb
-    console.log timer
-  stop = () ->
-    console.log "metronome stop"
-    console.log timer
+  stop = (bpb) ->
     window.clearInterval timer
-    Session.set "beat", 0
-    console.log timer
+    Session.set "beat", -2*bpb
 
   start : start
   stop : stop
