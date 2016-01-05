@@ -97,12 +97,13 @@ Template.tabDisplay.onRendered ->
               x : fingerX j
               y : stringY i
               radius : size / 14
-            circle.on 'click', ((i,j) ->
+            setPosition = (i,j) ->
               -> 
                 Session.set "chord-#{displayId}-position",
                   string : i
                   fret : j
-              ) i, j
+            circle.on 'click', setPosition i, j
+            circle.on 'tap', setPosition i, j
             layer.add circle
             position = Session.get("chord-#{displayId}-position")
             if position?
