@@ -3,12 +3,15 @@ Template.tabDisplay.onRendered ->
   this.autorun ->
   
     chord = Template.currentData().chord
+    displayId = Template.currentData().displayId
+
     unless chord?
       return
     numStrings = chord.strings.length
     numFrets = chord.numFrets
      
-    size = $("##{Template.currentData().displayId}").width()
+    size = $("##{displayId}").width()
+    editing = Session.get "editing-#{displayId}"
 
     stringY = (string) ->
       numStrings = chord.strings.length
@@ -26,9 +29,9 @@ Template.tabDisplay.onRendered ->
       container : Template.currentData().displayId
       width : size
       height : size
+    
     layer = new Konva.Layer()
     
-    numStrings = chord.strings.length
     for name, i in chord.strings
       x = size / 40
       y = stringY i
@@ -86,6 +89,31 @@ Template.tabDisplay.onRendered ->
         fretNumber.setOffset
           x : fingerNumber.getWidth() / 2
         layer.add fretNumber
+
+      if editing
+        for name, i in chord.strings
+          for j in [0..numFrets - 1]
+            circle = new Konva.Circle
+              x : fingerX j
+              y : stringY i
+              radius : size / 14
+            circle.on 'click', ((i,j) ->
+              -> 
+                Session.set "chord-#{displayId}-position",
+                  string : i
+                  fret : j
+              ) i, j
+            layer.add circle
+            position = Session.get("chord-#{displayId}-position")
+            if position?
+              circle = new Konva.Circle
+                x : fingerX position.fret
+                y : stringY position.string
+                radius : size / 14
+                stroke : "red"
+                strokeWidth : 1
+              layer.add circle
+
     layer.draw()
     stage.add layer
   

@@ -19,10 +19,17 @@ template(name="chordDisplay")
         +chordEditToggle
       .card-content
         h4 #{name}
-        +tabDisplay(chord=this displayId=displayId size=160)
+        +tabDisplay(chord=this displayId=_id size=160)
       if editing
         .card-editor
-          +quickForm(collection="Chords" doc=this id=formId type="update" autosave=true buttonContent=false) 
+          button.btn.btn-default.one-button 1
+          button.btn.btn-default.two-button 2
+          button.btn.btn-default.three-button 3
+          button.btn.btn-default.four-button 4
+          button.btn.btn-default.five-button 5
+          button.btn.btn-default.barre-button B
+          button.btn.btn-default.delete-button X
+          +quickForm(collection="Chords" doc=this id=formId type="update" autosave=true buttonContent=false fields="name,numFrets,firstFret") 
 
 template(name="chordEditToggle")
   span

@@ -30,8 +30,11 @@
       type : "hidden"
   numFrets :
     type : Number #number of frets displayed in the tab
+    min : 3
+    max : 8
   firstFret :
     type : Number #the leftmost fret displayed in the tab
+    min : 1
   fingers :
     type : [fingerSchema]
 
