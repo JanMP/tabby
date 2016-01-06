@@ -18,5 +18,8 @@ in no particular order:
 * Custom form for Edit Song
 * ~~Mouse-Click Editing for tabs~~
 * Make User Access to different bits of Data more transparent to the user
-* Turn off autopublish
+* ~~Turn off autopublish~~
+* check if subscriptions are ready and display loading-indicators if not
+* ~~delete all the tabs when deleting a song~~
+* setup Admin Access
 

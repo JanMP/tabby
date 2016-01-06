@@ -1,3 +1,9 @@
+Template.songEdit.onCreated ->
+  this.autorun =>
+    id = FlowRouter.getParam "id"
+    this.subscribe "songTabs", id
+
+
 Template.songEdit.helpers
 
   formId : ->

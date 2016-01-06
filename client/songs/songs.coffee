@@ -25,7 +25,7 @@ Template.songDeleteButton.events
 
   "click .delete-button" : ->
     if confirm "really delete #{this._id}?"
-      Songs.remove this._id
+      Meteor.call "removeSong", this._id
 
 Template.songPlayButton.events
 

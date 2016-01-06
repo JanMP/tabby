@@ -18,6 +18,10 @@ fetchTabs = ->
   tabs : tabs
   endBeat : endBeat
 
+Template.songPlay.onCreated ->
+  this.autorun =>
+    id = FlowRouter.getParam "id"
+    this.subscribe "songTabs", id
 
 Template.songPlay.helpers
 

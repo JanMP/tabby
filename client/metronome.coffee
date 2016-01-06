@@ -1,7 +1,9 @@
 Metronome = () ->
-  timer = ""
   
-  urls = (name) -> ["/sounds/#{name}.ogg", "/sounds/#{name}.mp3", "/sounds/#{name}.aac", "/sounds/#{name}.wav"]
+  timer = ""
+  urls = (name) ->
+    ["/sounds/#{name}.ogg", "/sounds/#{name}.mp3",
+    "/sounds/#{name}.aac", "/sounds/#{name}.wav"]
   snare = new Howl
     urls : urls "snare"
   bass = new Howl
@@ -14,9 +16,11 @@ Metronome = () ->
       bass.play()
     else
       snare.play()
+
   start = (bpm, bpb=4) ->
     stop(bpb)
     timer = window.setInterval doTimer, 60/bpm*1000, bpb
+
   stop = (bpb) ->
     window.clearInterval timer
     Session.set "beat", -2*bpb

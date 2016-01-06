@@ -41,6 +41,9 @@ setFinger = (fingerNumber, tmplInst) ->
   fingerAtPosition = (finger) ->
     finger.fret is position.fret and finger.string is position.string
 
+  sameFinger = (finger) ->
+    finger.number is fingerNumber
+
   id = tmplInst.data._id
   position = Session.get "chord-#{id}-position"
   if position?
@@ -55,7 +58,7 @@ setFinger = (fingerNumber, tmplInst) ->
       finger.barre = not finger.barre
     if fingerNumber > 0
       finger.number = fingerNumber
-    newFingers = _(fingers).reject fingerAtPosition
+    newFingers = _.chain(fingers).reject(fingerAtPosition).reject(sameFinger).value()
     if fingerNumber >= 0
       newFingers.push finger
     Chords.update id,
@@ -72,9 +75,6 @@ Template.chordDisplay.events
   "click .five-button" : (event, tmplInst) -> setFinger 5, tmplInst
   "click .barre-button" : (event, tmplInst) -> setFinger 0, tmplInst
   "click .delete-button" : (event, tmplInst) -> setFinger -1, tmplInst
-
-
-
 
 
 Template.chords.events

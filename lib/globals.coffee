@@ -1,6 +1,6 @@
 @Chords = new Mongo.Collection "chords"
 
-@fingerSchema = new SimpleSchema
+fingerSchema = new SimpleSchema
   number :
     type : Number #the finger number displayed in the tab
   fret :
@@ -10,7 +10,7 @@
   barre :
     type : Boolean #barre to this string starting at string 0
 
-@chordSchema = new SimpleSchema
+chordSchema = new SimpleSchema
   instrument :
     type : String
     autoform :
@@ -98,7 +98,7 @@ Chords.attachSchema chordSchema
 
 @Songs = new Mongo.Collection "songs"
 
-@songSchema = new SimpleSchema
+songSchema = new SimpleSchema
   title :
     type : String
   userId :
@@ -122,7 +122,7 @@ Songs.attachSchema songSchema
 
 @Tabs = new Mongo.Collection "tabs"
 
-@tabSchema =  new SimpleSchema
+tabSchema =  new SimpleSchema
   songId :
     type : String #the _id of the Song
   userId :
@@ -148,3 +148,40 @@ Tabs.attachSchema tabSchema
   chordId : chordId
   order : 1000
   beats : 4
+
+userProfileSchema = new SimpleSchema
+  oneFingerPerString :
+    type : Boolean
+    optional : true
+
+emailSchema = new SimpleSchema
+  address :
+    type : String
+  verified :
+    type : Boolean
+
+userSchema = new SimpleSchema
+  username :
+    type : String
+    optional : true
+  emails :
+    type : [emailSchema]
+    optional : true
+  createdAt :
+    type : Date
+    optional : true
+  profile :
+    type : userProfileSchema
+    optional : true
+  services :
+    type : Object
+    optional : true
+    blackbox : true
+  roles :
+    type : [String]
+    optional : true
+  heartbeat :
+    type : Date
+    optional : true
+
+Meteor.users.attachSchema userSchema
