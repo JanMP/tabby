@@ -22,4 +22,8 @@ template(name='navbar')
           li(class=isActivePath("/help"))
             a(href="/help")
               i.fa.fa-lg.fa-question
+          if isUserAdmin
+            li(class=isActivePath("/user-admin"))
+              a(href="/user-admin")
+                i.fa.fa-lg.fa-users
           +loginButtons

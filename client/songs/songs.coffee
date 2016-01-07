@@ -8,7 +8,12 @@ Template.songs.helpers
 Template.songDisplay.helpers
   
   mayEdit : ->
-    this.userId is Meteor.userId()
+    this.userId is Meteor.userId() or
+    Roles.userIsInRole Meteor.userId(), "dataAdmin"
+
+  notMineClass : ->
+    unless this.userId is Meteor.userId()
+      "notMine"
 
 Template.songs.events
 

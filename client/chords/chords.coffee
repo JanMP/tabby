@@ -27,7 +27,12 @@ Template.chordDisplay.helpers
     "form-#{this._id}"
 
   mayEdit : ->
-    this.userId is Meteor.userId()
+    this.userId is Meteor.userId() or
+    Roles.userIsInRole Meteor.userId(), "dataAdmin"
+
+  notMineClass : ->
+    unless this.userId is Meteor.userId()
+      "notMine"
 
   string : ->
     Session.get("chord-#{this._id}-position")?.string

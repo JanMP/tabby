@@ -32,3 +32,8 @@ FlowRouter.route "/help",
   action : ->
     BlazeLayout.render "layout",
       content : "help"
+
+FlowRouter.route "/user-admin",
+  action : ->
+    BlazeLayout.render "layout",
+      content : "userAdmin"

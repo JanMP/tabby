@@ -1,0 +1,19 @@
+template(name="userAdmin")
+  .container
+    h1.page-header users
+    if isUserAdmin
+      each users
+        +adminDisplayUser
+    else
+      h1 Access denied. You should not be here.
+
+template(name="adminDisplayUser")
+  .card-panel
+    .card-content
+      h3 #{username}
+      p emails: 
+        each emails
+          span #{address} 
+      p roles:
+        each allRoles
+          span(class=roleClass) #{name} 

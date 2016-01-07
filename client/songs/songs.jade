@@ -12,8 +12,9 @@ template(name="songDisplay")
   .card-panel
     .card-content
       if mayEdit
-        +songDeleteButton
-        +songEditButton
+        div(class=notMineClass)
+          +songDeleteButton
+          +songEditButton
       +songPlayButton
       h3 #{title}
 
