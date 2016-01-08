@@ -127,9 +127,6 @@ tabSchema =  new SimpleSchema
     type : String #the _id of the Song
   userId :
     type : String
-    autoValue : ->
-      unless this.isSet
-        Meteor.userId()
   chordId :
     type : String #the _id of the Chord
   order :
@@ -150,7 +147,7 @@ Tabs.attachSchema tabSchema
   beats : 4
 
 userProfileSchema = new SimpleSchema
-  oneFingerPerString :
+  eachFingerOnce :
     type : Boolean
     optional : true
 

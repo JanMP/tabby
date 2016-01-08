@@ -17,7 +17,8 @@ Template.songEdit.helpers
   mayEdit : ->
     id = FlowRouter.getParam "id"
     song = Songs.findOne id
-    song?.userId is Meteor.userId()
+    song?.userId is Meteor.userId() or
+      Roles.userIsInRole Meteor.userId(), "dataAdmin"
 
   chords : ->
     Chords.find
@@ -63,6 +64,7 @@ Template.songEdit.helpers
 
       templInst.collection.insert
         songId : FlowRouter.getParam "id"
+        userId : Meteor.userId()
         chordId : event.data._id
         order : index
         beats : 4

@@ -9,6 +9,9 @@ template(name="userAdmin")
 
 template(name="adminDisplayUser")
   .card-panel
+    if showTrash
+      span
+        i.fa.fa-lg.fa-fw.fa-trash.icon-button.delete-button.pull-right
     .card-content
       h3 #{username}
       p emails: 
@@ -17,3 +20,4 @@ template(name="adminDisplayUser")
       p roles:
         each allRoles
           span(class=roleClass) #{name} 
+      p songs: #{songCount}  chords: #{chordCount}

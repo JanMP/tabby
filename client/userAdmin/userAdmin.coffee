@@ -21,6 +21,12 @@ Template.adminDisplayUser.helpers
         "isNotInRole"
     roles
 
+  songCount : -> Songs.find({userId:Template.currentData()._id}).count()
+
+  chordCount : -> Chords.find({userId:Template.currentData()._id}).count()
+
+  showTrash : ->
+    Template.currentData().username not in ["admin", "keeper"]
 
 Template.adminDisplayUser.events
 
@@ -37,4 +43,10 @@ Template.adminDisplayUser.events
     userId = tmplInst.data._id
     unless username is "admin" or username is Meteor.user().username
       Roles.addUsersToRoles userId, rolename
+
+  "click .delete-button" : (event, tmplInst) ->
+    if confirm "Really delete this user?"
+      Meteor.call "deleteUser", tmplInst.data._id
+
+
     
