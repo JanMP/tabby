@@ -1,10 +1,14 @@
 template(name="songPlay")
   .container
     .card-panel
+      .player-header
+        span
+          span.player-button
+            i.fa.fa-lg.fa-fw.fa-play.start-button
+          span.player-button
+            i.fa.fa-lg.fa-fw.fa-stop.stop-button
+        span.song-title #{song.title}
       .card-content
-        h1.page-header play - #{song.title}
-        h3.start-button start
-        h3.stop-button stop
         +playTabDisplay
 
 template(name="playTabDisplay")
@@ -18,16 +22,3 @@ template(name="playTabDisplay")
         h4 in #{countdown} - #{nextChord.name}
         +tabDisplay(chord=nextChord displayId="next-tab" size=120)
         p #{nextLyrics}
-
-//template(name="playTabDisplay")
-  if beatHelper.active
-    h3 #{beatHelper.beatFormatted}
-    .flex-container
-      .tab-container.flex
-        +tabDisplay(chord=chord displayId=_id size=120)
-        h5 #{chord.name} - #{lyrics}
-      .tab-container.flex
-        h1 #{beatHelper.countdown}
-      .tab-container.flex
-        +tabDisplay(chord=beatHelper.nextChord displayId=beatHelper.nextTab._id size=120)
-        h5 #{beatHelper.nextChord.name} - #{beatHelper.nextTab.lyrics}
